@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Rock Paper Scissors</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            font-weight:600;
+            background: rgb(34,193,195);
+            background: radial-gradient(circle, rgba(34,193,195,1) 0%, rgba(126,22,57,1) 100%);
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .img{
+            width:10rem;
+            height: 10rem;
+            display: grid;
+        }
+        .h1{
+            text-decoration: underline solid;
+            text-shadow: 1px 1px;
+        }
+        .p{
+            font-size: larger;
+        }
+        .p1{
+            color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="h1">Rock   Paper  Scissors</h1>
+    <p class="p">Select either rock, paper, or scissors and see if you can beat the computer!</p>
+
+    <p class="p1"><strong>Remember:</strong> “Rock breaks scissors, scissors cuts paper, paper covers rock.” </p>
+    <div class='score'>
+
+    </div>
+    <div class='message'>
+
+    </div>
+    <button type='button' class="but">Rock</button>
+    <img  class="img" src="rock--left.png"><br>
+    <button type='button'>Paper</button>
+    <img class="img" src="paper--left.png"><br>
+    <button type='button'>Scissors</button>
+    <img class="img" src="scissors--left.png">
+    <script>
+        const message = document.querySelector('.message');
+        const score = document.querySelector('.score');
+        const buttons = document.querySelectorAll('button');
+        const winnerScores = [0,0];
+        
+        
+        for ( let i = 0 ; i < buttons.length ; i++){
+            buttons[i].addEventListener('click', playGame);
+        }
+
+        function playGame(e){
+           
+            let playerSelection = e.target.innerText;
+           
+            let computerSelection = Math.random();
+
+            
+            if (computerSelection < .34){
+                computerSelection = 'Rock';
+            } else if (computerSelection <= .67){
+                computerSelection = 'Paper';
+            } else {
+                computerSelection = 'Scissors';
+            }
+            
+         
+            let result = checkWinner(playerSelection, computerSelection);
+
+       
+            if (result === 'Player'){
+                result += ' wins!';
+             
+                winnerScores[0]++;
+            }
+
+            if (result === 'Computer'){
+                result += ' wins!';
+                winnerScores[1]++;
+            }
+
+            if (result === 'Draw'){
+                result += '. It\'s a tie!'
+            }
+
+           
+            score.innerHTML = 'Player: [ ' + winnerScores[0]+ ' ] Computer: [ ' + winnerScores[1] + ' ]';
+
+            
+            messenger('Player: <strong>' + playerSelection + '</strong> Computer: <strong>' + computerSelection + '</strong><br>' + result);
+        }
+
+        function messenger(selectionMessage){
+            message.innerHTML = selectionMessage;
+        }
+
+        function checkWinner(player, computer){
+            if (player === computer){
+                return 'Draw';
+            }
+
+            if (player === 'Rock'){
+                if(computer === 'Paper'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+
+            if (player === 'Paper'){
+                if (computer === 'Scissors'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+
+            if (player === 'Scissors'){
+                if (computer === 'Rock'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
